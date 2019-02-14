@@ -5,7 +5,10 @@ const { authenticate, generateToken } = require("../auth/authenticate");
 module.exports = server => {
   server.post("/api/register", register);
   server.post("/api/login", login);
+  server.post("/api/story", postStory)
   server.get("/api/story", authenticate, getStories);
+  server.put("/api/approve/:id", authenticate, approveStories);
+  // server.get("/api/approved", getApproved);
 };
 
 function register(req, res) {
@@ -59,3 +62,39 @@ function getStories(req,res) {
   })
 };
 
+function postStory(req, res) {
+  // console.log(req.body)
+  db("story")
+  .insert(req.body)
+  .then(story => {
+    res.status(200).json(story)
+  })
+  .catch(err => {
+    res.status(500).json({message: "cant post stories" })
+  })
+};
+
+function approveStories(req, res)  {
+let id = req.params.id
+let approve = req.body
+id.approved = true;
+db("story")
+// console.log(req.params.id)
+.update(id, approve)
+.then(story => {
+  res.status(200).json(story)
+})
+.catch(err => {
+  res.status(500).json(err)
+})
+};
+
+// function getApproved(req,res) {
+//   db("approved")
+//   .then(story => {
+//     res.status(200).json(story)
+//   })
+//   .catch(err => {
+//     res.status(500).json({message: "cant get stories1" })
+//   })
+// };
