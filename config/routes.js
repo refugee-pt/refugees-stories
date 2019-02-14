@@ -9,6 +9,7 @@ module.exports = server => {
   server.get("/api/story", authenticate, getStories);
   server.put("/api/approve/:id", authenticate, approveStories);
   server.delete("/api/story/:id", authenticate, deleteStory);
+  server.get("/api/stories", publishedStories)
 };
 
 function register(req, res) {
@@ -77,7 +78,7 @@ function approveStories(req, res)  {
 db("story")
 .update("approved", true).where("id", req.params.id)
 .then(story => {
-  res.status(200).json(id)
+  res.status(200).json(story)
 })
 .catch(err => {
   res.status(500).json(err)
@@ -93,4 +94,16 @@ function deleteStory(req,res) {
   .catch(err => {
     res.status(500).json(err)
   })
+};
+
+function publishedStories(req, res){
+  db("story")
+  .where("approved", true)
+  .then(story => { 
+    res.status(200).json(story)
+  }) 
+  .catch(err => {
+    res.status(500).json({message: "cant get stories" })
+  })
+
 };
