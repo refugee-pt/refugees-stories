@@ -5,10 +5,10 @@ const { authenticate, generateToken } = require("../auth/authenticate");
 module.exports = server => {
   server.post("/api/register", register);
   server.post("/api/login", login);
-  server.post("/api/story", postStory)
+  server.post("/api/story", postStory);
   server.get("/api/story", authenticate, getStories);
   server.put("/api/approve/:id", authenticate, approveStories);
-  // server.get("/api/approved", getApproved);
+  server.delete("/api/story/:id", authenticate, deleteStory);
 };
 
 function register(req, res) {
@@ -63,7 +63,6 @@ function getStories(req,res) {
 };
 
 function postStory(req, res) {
-  // console.log(req.body)
   db("story")
   .insert(req.body)
   .then(story => {
@@ -75,26 +74,23 @@ function postStory(req, res) {
 };
 
 function approveStories(req, res)  {
-let id = req.params.id
-let approve = req.body
-id.approved = true;
 db("story")
-// console.log(req.params.id)
-.update(id, approve)
+.update("approved", true).where("id", req.params.id)
 .then(story => {
-  res.status(200).json(story)
+  res.status(200).json(id)
 })
 .catch(err => {
   res.status(500).json(err)
 })
 };
 
-// function getApproved(req,res) {
-//   db("approved")
-//   .then(story => {
-//     res.status(200).json(story)
-//   })
-//   .catch(err => {
-//     res.status(500).json({message: "cant get stories1" })
-//   })
-// };
+function deleteStory(req,res) {
+  db("story")
+  .where("id", req.params.id).delete()
+  .then(story => {
+    res.status(200).json(id)
+  })
+  .catch(err => {
+    res.status(500).json(err)
+  })
+};
