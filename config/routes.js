@@ -1,11 +1,11 @@
-const db = require("../database/dbConfig.js");
+const db = require("../data/db.Config.js");
 const bcrypt = require("bcryptjs");
 const { authenticate, generateToken } = require("../auth/authenticate");
 
 module.exports = server => {
   server.post("/api/register", register);
   server.post("/api/login", login);
-  server.get("/api/jokes", authenticate, getJokes);
+  server.get("/api/story", authenticate, getStories);
 };
 
 function register(req, res) {
@@ -48,4 +48,14 @@ function login(req, res) {
       res.status(500).send(err);
     });
 }
+
+function getStories(req,res) {
+  db("story")
+  .then(story => {
+    res.status(200).json(story)
+  })
+  .catch(err => {
+    res.status(500).json({message: "cant get stories" })
+  })
+};
 
