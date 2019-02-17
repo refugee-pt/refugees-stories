@@ -8,6 +8,8 @@ const configureRoutes = require('../config/routes.js');
 
 const server = express();
 
+server.use(cors())
+
 server.use(helmet());
 
 server.use(express.json());
