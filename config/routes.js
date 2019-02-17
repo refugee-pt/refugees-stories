@@ -10,7 +10,12 @@ module.exports = server => {
   server.put("/api/approve/:id", authenticate, approveStories);
   server.delete("/api/story/:id", authenticate, deleteStory);
   server.get("/api/stories", publishedStories)
+  server.get("/api/up", healthCheck)
 };
+
+function healthCheck(req, res){
+res.status(200)
+}
 
 function register(req, res) {
   const credentials = req.body;
@@ -97,6 +102,7 @@ function deleteStory(req,res) {
 };
 
 function publishedStories(req, res){
+  console.log("did this work?")
   db("story")
   .where("approved", true)
   .then(story => { 
