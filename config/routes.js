@@ -97,6 +97,7 @@ function deleteStory(req,res) {
 };
 
 function publishedStories(req, res){
+  console.log("did this work?")
   db("story")
   .where("approved", true)
   .then(story => { 
