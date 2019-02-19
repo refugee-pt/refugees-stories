@@ -10,12 +10,10 @@ module.exports = server => {
   server.put("/api/approve/:id", authenticate, approveStories);
   server.delete("/api/story/:id", authenticate, deleteStory);
   server.get("/api/stories", publishedStories)
-  server.get("/api/up", healthCheck)
+
 };
 
-function healthCheck(req, res){
-res.status(200)
-}
+
 
 function register(req, res) {
   const credentials = req.body;
