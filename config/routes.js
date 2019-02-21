@@ -92,7 +92,7 @@ function deleteStory(req,res) {
   db("story")
   .where("id", req.params.id).delete()
   .then(story => {
-    res.status(200).json(id)
+    res.status(200).json(story)
   })
   .catch(err => {
     res.status(500).json(err)
