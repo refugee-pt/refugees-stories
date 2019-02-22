@@ -1,11 +1,5 @@
 # Backend
-server.post("/api/register", register);
-  server.post("/api/login", login);
-  server.post("/api/story", postStory);
-  server.get("/api/story", authenticate, getStories);
-  server.put("/api/approve/:id", authenticate, approveStories);
-  server.delete("/api/story/:id", authenticate, deleteStory);
-  server.get("/api/stories", publishedStories)
+
 
   Refugee-Stories backend database has two tables.  The username Table has a Username column and a Password column.  The story table has a Name, Age, Location, Approved, and image column.  
 
