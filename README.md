@@ -1,3 +1,6 @@
+I Built this Backend from scratch as part of a team of 3 developers who the other 2 did the frontend of the project.  I built the database made all the endpoints for the frontend to call.  I made the Authentication from scratch.  
+
+
 Refugee-Stories backend database has two tables.  The username Table has a Username column and a Password column.  The story table has a Name, Age, Location, Approved, and image column.  
 
   To register a new user you would use server.post("/api/register").  The function is called register and its in the routes.js
